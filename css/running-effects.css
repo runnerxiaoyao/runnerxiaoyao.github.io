@@ -1,0 +1,98 @@
+/* 跑步者动画 */
+@keyframes running {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.running-figure {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: running 15s linear infinite;
+  z-index: 9999;
+  opacity: 0.7;
+}
+
+/* 文章标题动画 */
+.post-title {
+  position: relative;
+  overflow: hidden;
+}
+
+.post-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
+  transform: translateX(-100%);
+  animation: titleLine 2s ease-in-out infinite;
+}
+
+@keyframes titleLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* 文章内容滚动效果 */
+.post-content {
+  position: relative;
+}
+
+.post-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 标签动画效果 */
+.post-meta__tags {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.post-meta__tags:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.post-meta__tags::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #ff6b6b;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.post-meta__tags:hover::after {
+  transform: scaleX(1);
+} 

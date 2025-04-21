@@ -1,0 +1,138 @@
+/* 文章卡片动画效果 */
+.recent-post-item {
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.recent-post-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.recent-post-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.recent-post-item:hover::before {
+  background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+}
+
+/* 文章封面图片动画 */
+.recent-post-item .post_cover {
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+.recent-post-item:hover .post_cover img {
+  transform: scale(1.05);
+}
+
+.recent-post-item .post_cover img {
+  transition: all 0.5s ease;
+}
+
+/* 文章标题动画 */
+.recent-post-item .article-title {
+  position: relative;
+  display: inline-block;
+}
+
+.recent-post-item .article-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #ff6b6b;
+  transition: width 0.3s ease;
+}
+
+.recent-post-item:hover .article-title::after {
+  width: 100%;
+}
+
+/* 文章信息动画 */
+.recent-post-item .article-meta-wrap {
+  transition: all 0.3s ease;
+}
+
+.recent-post-item:hover .article-meta-wrap {
+  transform: translateY(-2px);
+}
+
+/* 分类标签动画 */
+#category-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.category-bar-item {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.category-bar-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.category-bar-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #ff6b6b;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.category-bar-item:hover::after {
+  transform: scaleX(1);
+}
+
+/* 分页按钮动画 */
+.pagination .page-number {
+  transition: all 0.3s ease;
+}
+
+.pagination .page-number:hover {
+  transform: scale(1.1);
+  background: #ff6b6b;
+  color: white;
+}
+
+/* 背景装饰动画 */
+#page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} 
