@@ -112,30 +112,57 @@
       }
     }
 
-    // Hook into PJAX navigation to prevent re-muting and auto-click play button
+    // Hook into PJAX navigation to prevent re-muting and ensure continuous playback
     function onPageChange() {
       preventRemuting();
       
-      // Auto-click play button when entering article pages (not homepage)
+      // Ensure music continues playing and hide play button on article pages
       setTimeout(function() {
         try {
           var isArticlePage = window.location.pathname.match(/\/\d{4}\/\d{2}\/\d{2}\//);
-          if (isArticlePage && playBtn.style.display !== 'none') {
-            playBtn.click();
+          if (isArticlePage) {
+            // Force continue playback if it was playing before
+            if (window.__aplayer_state && window.__aplayer_state.unmuted) {
+              if (ap.audio && ap.audio.paused) {
+                ap.play && ap.play().catch(function () {});
+              }
+            }
+            // Always hide play button on article pages
+            playBtn.style.display = 'none';
           }
         } catch (e) {}
-      }, 1000);
+      }, 500);
     }
     
     document.addEventListener('pjax:complete', onPageChange);
     document.addEventListener('pjax:success', onPageChange);
     
+    // Also hook into regular page navigation (non-PJAX)
+    window.addEventListener('popstate', onPageChange);
+    window.addEventListener('load', onPageChange);
+    
     // Also check periodically to prevent accidental muting
     setInterval(preventRemuting, 2000);
 
-    // Visibility handling: do not force play when returning to tab to respect user's pause
+    // Prevent music pausing when clicking homepage cards
+    document.addEventListener('click', function(e) {
+      try {
+        var cardLink = e.target.closest && e.target.closest('.recent-post-item a, .post-card a, [href*="/2024/"], [href*="/2025/"]');
+        if (cardLink && window.__aplayer_state && window.__aplayer_state.unmuted) {
+          // Mark that we're navigating to an article to prevent pausing
+          window.__aplayer_navigating = true;
+          setTimeout(function() {
+            window.__aplayer_navigating = false;
+          }, 2000);
+        }
+      } catch (e) {}
+    });
+
+    // Modified visibility handling: don't pause when navigating between pages
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden) ap.pause && ap.pause();
+      if (document.hidden && !window.__aplayer_navigating) {
+        ap.pause && ap.pause();
+      }
     });
 
     // Stop per-page playlist switching: keep one global playlist for the whole site
