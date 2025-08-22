@@ -1,0 +1,49 @@
+/* 全局背景图 */
+body {
+  background-image: url('/img/20200410000103_R2QNH.jpeg') !important;
+  background-attachment: fixed !important;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+/* 首页大图区域透明化，以显示全局背景 */
+#page-header.full_page {
+  background: transparent !important;
+}
+
+/* 顶部遮罩，保证标题可读性 */
+#page-header.full_page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.35) !important; /* 调整透明度 0~1 */
+  z-index: 1;
+}
+
+/* 确保标题和向下箭头在遮罩之上 */
+#site-info,
+#scroll-down,
+#nav {
+  position: relative;
+  z-index: 2;
+}
+
+/* 卡片半透明 + 玻璃磨砂效果 */
+#aside-content .card-widget,
+#recent-posts .recent-post-item,
+.layout > #post,
+.layout > #page,
+.layout .archive-timeline {
+    background: rgba(255, 255, 255, 0.82) !important; /* 卡片白色半透明背景 */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* 卡片悬停轻微浮起 */
+#recent-posts .recent-post-item:hover,
+#aside-content .card-widget:hover {
+  transform: translateY(-2px);
+  transition: transform .2s ease;
+}
+
